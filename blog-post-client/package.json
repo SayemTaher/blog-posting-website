@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@react-icons/all-files": "^4.1.0",
+    "animate.css": "^4.1.1",
+    "aos": "^2.3.4",
     "axios": "^1.6.8",
     "date-fns": "^3.6.0",
     "firebase": "^10.11.1",
@@ -20,6 +22,7 @@
     "react-dom": "^18.2.0",
     "react-helmet-async": "^2.0.5",
     "react-hot-toast": "^2.4.1",
+    "react-loading-skeleton": "^3.4.0",
     "react-router-dom": "^6.23.1",
     "sort-by": "^1.2.0",
     "sweetalert2": "^11.11.0",
@@ -29,11 +32,14 @@
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.19",
     "daisyui": "^4.11.1",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3",
     "vite": "^5.2.0"
   }
 }
