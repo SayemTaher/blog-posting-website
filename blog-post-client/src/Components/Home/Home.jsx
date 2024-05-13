@@ -6,7 +6,7 @@ import { Link, useLoaderData } from "react-router-dom";
 import { HiArrowLongRight } from "react-icons/hi2";
 import Blog from "../Blogs/Blog";
 const HeroSection = () => {
-    const divRef = useRef(null);
+    
     const loadedBlogs = useLoaderData()
 
   return (
@@ -37,7 +37,7 @@ const HeroSection = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.5, duration: 0.5 }}
                 href="#"
-                class="block mt-2 text-6xl font-bold
+                className="block mt-2 text-6xl font-bold
                   text-colorNavy transition-colors duration-300 transform  hover:text-gray-600 hover:underline"
                 tabindex="0"
                 role="link"
@@ -252,11 +252,11 @@ const HeroSection = () => {
           </div>
         </div>
           </div>
-          <div className="flex flex-col gap-2 mt-10 mb-10">
+          <div className="flex flex-col  gap-2  mt-10 mb-10">
               <div>
-                  <h1 className="lg:text-4xl text-2xl font-bold ">Recent Posts</h1>
+                  <h1 className="lg:text-4xl text-2xl text-colorNavy text-left mb-5 border-b-4 border-colorNavy w-[250px] pb-2 font-bold ">Recent Posts</h1>
               </div>
-              <div>
+              <div className="grid lg:grid-cols-2 grid-cols-1 justify-evenl bg-gray-100  gap-5 p-5 ">
                   {
                       loadedBlogs.slice(0,6).map(blog => <Blog key={blog._id} blog={blog}></Blog>)
                   }

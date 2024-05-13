@@ -20,6 +20,7 @@ const Login = () => {
       .then((result) => {
           console.log(result.user);
           toast.success('Signed in successfully')
+          navigate('/')
       })
       .catch((error) => {
           console.log(error.message);

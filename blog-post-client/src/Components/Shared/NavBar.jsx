@@ -87,7 +87,7 @@ const NavBar = () => {
                 role="button"
                 className="btn btn-ghost btn-circle avatar"
               >
-                <div className="w-10 rounded-full">
+                <div className="w-10 rounded-full border-4 border-blue-400">
                   {user ? (
                     <img alt="user image" src={user.photoURL} />
                   ) : (

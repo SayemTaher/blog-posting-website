@@ -1,83 +1,143 @@
 import { SwiperSlide, Swiper } from "swiper/react";
 import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper/modules";
 import "swiper/css";
+import { motion } from "framer-motion";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { BsArrowUpRight } from "react-icons/bs";
+import { IoShieldCheckmarkOutline } from "react-icons/io5";
 
 // Import Swiper styles
 import "swiper/swiper-bundle.css";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const Blog = ({ blog }) => {
-    const {_id,title,photoUrl,category,description,details,postedTime} = blog
-  return (
-    <div className="-z-10">
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-                .swiper-button-next, .swiper-button-prev {
-                    color: #F4F8EC;
-                     
-                }
-                .swiper-button-next:after, .swiper-button-prev:after {
-                    font-size: 40px;
-                    color: #ffffff;
-                }
-                .swiper-pagination-bullet {
-                  background: #ffffff;
-                  opacity: 0.6;
-                  width: 8px;
-                  height: 8px;
-                  border-radius: 50%;
-              }
-              
-              .swiper-pagination-bullet-active {
-                  background: #292900;
-                  opacity: 1;
-              }
-            `,
-        }}
-      />
+    const navigate = useNavigate()
+     const { user } = useContext(AuthContext);
+     const {
+       _id,
+       title,
+       photoUrl,
+       category,
+       description,
+       details,
+       postedTime,
+     } = blog;
+     const [addedItems, setAddedItems] = useState([]);
 
-      <Swiper
-        data-aos="fade-up"
-        spaceBetween={50}
-        slidesPerView={1}
-        cssMode={true}
-        navigation={true}
-        pagination={true}
-        mousewheel={true}
-        keyboard={true}
-        modules={[Navigation, Pagination, Mousewheel, Keyboard]}
-        className="mySwiper"
-        onSlideChange={() => console.log("slide change")}
-        onSwiper={(swiper) => console.log(swiper)}
+     const currentDate = new Date();
+     const options = { day: "numeric", month: "long", year: "numeric" };
+     const AddedTime = currentDate.toLocaleDateString("en-US", options);
+
+     const handleAddtoWishlist = () => {
+       if (!user) {
+         toast.error("Please sign in first");
+         return;
+       }
+
+       // Check if the item is already in the wishlist
+       if (addedItems.some((item) => item._id === _id)) {
+         toast.error("This item is already in your wishlist");
+         return;
+       }
+
+       const wishListItem = {
+         user,
+         title,
+         photoUrl,
+         category,
+         description,
+         details,
+         AddedTime,
+       };
+
+       
+       setAddedItems((prevItems) => [...prevItems, wishListItem]);
+
+       // Send the item to the server to add it to the wishlist
+       fetch("http://localhost:3000/wishlist", {
+         method: "POST",
+         headers: {
+           "content-type": "application/json",
+         },
+         body: JSON.stringify(wishListItem),
+       })
+         .then((res) => res.json())
+         .then((data) => {
+           console.log(data);
+           toast.success("Blog added to your wishlist");
+         })
+         .catch((error) => {
+           console.error("Error adding item to wishlist:", error);
+             toast.error("Failed to add item to wishlist");
+             navigate('/')
+             
+         });
+     };
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 1, duration: 0.5 }}
+    >
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 0.5 }}
+        className="flex gap-5 bg-white flex-col shadow-md z-50  items-center h-[600px] w-full"
       >
-              <SwiperSlide>
-                  <div className="flex gap-2 justify-center rounded-xl items-center p-4 h-[400px] w-[600px]">
-                      <div>
-                          <img src={photoUrl} className="rounded-xl shadow-xl" alt={`img of ${_id}`} />
-                      </div>
-                      <div className="flex flex-col justify-between">
-                          <div className="flex justify-between items-center mb-2">
-                              <p>{category}</p>
-                              <button>Wishlist</button>
-                          </div>
-                          <div className="flex gap-2 flex-col">
-                              <h1 className="text-2xl font-bold text-colorNavy">{title}</h1>
-                              <p className="text-colorGray">{ description.slice(0,100)}</p>
-                          </div>
-                          <div>
-                              <span>
-                                  {details.slice(0, 150)}
-                              </span>
-                          </div>
-                      </div>
-                  </div>
-         
-        </SwiperSlide>
-        
-      </Swiper>
-    </div>
+        <div>
+          <img
+            src={photoUrl}
+            className=" w-[740px] h-[250px]  object-cover "
+            alt={`img of ${_id}`}
+          />
+        </div>
+        <div className="flex flex-col ml-4 mr-4  justify-between">
+          <div className="flex items-center justify-between mb-2">
+            <p className=" text-blue-500  ">{category}</p>
+            <span className="text-gray-500">{postedTime}</span>
+          </div>
+          <div className="flex gap-2 text-left flex-col">
+            <motion.h1
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+              className="text-2xl font-bold text-colorNavy"
+            >
+              {title}
+            </motion.h1>
+            <p className="text-gray-600">{description.slice(0, 150)}</p>
+          </div>
+          <div className="mt-2 flex flex-col  text-left items-start justify-start mb-2">
+            <span className="text-lg font-bold text-colorNavy">Remarks </span>
+            <span className="text-gray-600 text-left mb-2 mt-2">
+              {details.slice(0, 200)}
+            </span>
+          </div>
+          <div className="flex items-center mt-2 justify-between">
+            <div className="flex justify-center text-center items-center gap-2 text-white bg-colorNavy rounded-full p-2 w-[130px] ">
+              <BsArrowUpRight></BsArrowUpRight>
+              <Link to={`/details/${_id}`}>
+                <button>Read More</button>
+              </Link>
+            </div>
+
+            <div
+              onClick={handleAddtoWishlist}
+              data-tip="Add to wishlist"
+              className="flex tooltip items-center cursor-pointer gap-2 justify-center w-[120px] text-center bg-gray-200 rounded-full text-gray-600 p-1 hover:bg-blue-900 hover:text-white"
+            >
+              <IoShieldCheckmarkOutline />
+              <button>Wishlist</button>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
   );
 };
 export default Blog;

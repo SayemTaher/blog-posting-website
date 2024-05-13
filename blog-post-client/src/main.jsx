@@ -18,6 +18,7 @@ import Update from "./Components/Blogs/Update";
 import Details from "./Components/Blogs/Details";
 import {  Toaster } from "react-hot-toast";
 import Error from "./404/Error";
+import WishListBlogs from "./Components/Blogs/WishListBlogs";
 
 const router = createBrowserRouter([
   {
@@ -62,6 +63,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+    
       {
         path: "/update",
         element: (
@@ -71,12 +73,14 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/details",
+        path: "/details/:id",
         element: (
           <PrivateRoute>
             <Details></Details>
           </PrivateRoute>
         ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/blogs/${params.id}`),
       },
     ],
   },
