@@ -9,10 +9,10 @@ import { MdDelete } from "react-icons/md";
 import "swiper/swiper-bundle.css";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import { useState } from "react";
 
 
-const WishListBlogs = ({ blog,  }) => {
+
+const WishListBlogs = ({ blog}) => {
   const {
     user,
     _id,

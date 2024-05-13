@@ -66,7 +66,7 @@ const Register = () => {
       );
       return;
     }
-    createUser( email, password)
+    createUser( email, password,photoUrl,name)
       .then((result) => {
         console.log(result.user);
           toast.success("User Created Successfully");

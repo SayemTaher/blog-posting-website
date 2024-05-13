@@ -24,11 +24,28 @@ const AuthProvider = ({ children }) => {
         
     },[])
 
-    const createUser = (email, password) => {
-        setLoader(true)
-        return createUserWithEmailAndPassword(auth,email,password)
+    // const createUser = (email, password) => {
+    //     setLoader(true)
+    //     return createUserWithEmailAndPassword(auth,email,password)
         
-    } 
+    // } 
+    const createUser = (email, password, photoUrl, name) => {
+      setLoader(true);
+      return createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Update user profile with photoUrl and name
+          return updateProfile(userCredential.user, {
+            displayName: name,
+            photoURL: photoUrl,
+          }).then(() => {
+            return userCredential;
+          });
+        })
+        .catch((error) => {
+          throw error;
+        });
+    };
+
 
     const signIn = (email, password) => {
         setLoader(true)
