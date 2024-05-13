@@ -89,6 +89,7 @@ const Register = () => {
               .then(data => {
                   console.log(data)
                   toast.success('User added to Database Successfully')
+                  navigate('/')
 
           })
       })

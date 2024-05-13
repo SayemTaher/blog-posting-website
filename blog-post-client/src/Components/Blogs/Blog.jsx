@@ -44,7 +44,8 @@ const Blog = ({ blog }) => {
          return;
        }
 
-       const wishListItem = {
+         const wishListItem = {
+           _id,
          user,
          title,
          photoUrl,
