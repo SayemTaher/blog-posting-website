@@ -76,7 +76,7 @@ const WishListBlogs = ({ blog}) => {
         <div>
           <img
             src={photoUrl}
-            className="h-[400px] w-full  object-cover "
+            className="h-[400px] w-[1500px]  object-cover "
             alt={`img of ${_id}`}
           />
         </div>

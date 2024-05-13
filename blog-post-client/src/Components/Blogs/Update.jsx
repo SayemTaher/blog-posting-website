@@ -23,6 +23,7 @@ const Update = () => {
        photoUrl,
        details,
     } = data
+
     console.log(data)
     
     const modifiedData = {
@@ -43,7 +44,13 @@ const Update = () => {
            .then((res) => res.json())
            .then((data) => {
              console.log(data);
-             toast.success("Blog Updated Successfully!");
+               toast.success("Blog Updated Successfully!");
+               setTitle('')
+               setPhotUrl('')
+               setCategory('')
+               setDescription('')
+               setDetails('')
+               
            });
        
     }
@@ -62,7 +69,7 @@ const Update = () => {
           </div>
           <div className='border-2 border-gray-600 border-dashed rounded-md'>
             <section className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md">
-              <h2 class="text-lg font-semibold text-gray-700 capitalize ">
+              <h2 className="text-lg font-semibold text-gray-700 capitalize ">
                 Update Blog Details
               </h2>
 
@@ -76,10 +83,9 @@ const Update = () => {
                       Title
                     </label>
                     <input
-                      type="text"
-                      name="title"
+                      
                       defaultValue={title}
-                      value={inputTitle}
+                      
                       onChange={(e) => setTitle(e.target.value)}
                       class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md   dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                     />
@@ -91,10 +97,10 @@ const Update = () => {
                     </label>
                     <select
                       className="select w-full select-ghost"
-                      value={inputCategory}
+                      
                       defaultValue={category}
                       onChange={(e) => setCategory(e.target.value)} // Corrected onChange event handler
-                      name="category"
+                      
                       required
                     >
                       <option value="">Select Category</option>
@@ -109,15 +115,15 @@ const Update = () => {
                   <div>
                     <label
                       className="text-gray-700 "
-                      for="password"
+                      
                     >
                       PhotUrl
                     </label>
                     <input
-                                        value={inputPhotoUrl}
+                                        
                                         onChange={e => setPhotUrl(e.target.value)}
                                         defaultValue={photoUrl}
-                      type="text"
+                      
                       class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md    focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                     />
                   </div>
@@ -126,9 +132,9 @@ const Update = () => {
                       <span className="label-text">Description</span>
                     </label>
                     <textarea
-                      type="text"
+                      
                       name="description"
-                      value={inputDescription}
+                     
                       defaultValue={description}
                       onChange={(e) => setDescription(e.target.value)}
                       className="input input-bordered"
@@ -147,7 +153,7 @@ const Update = () => {
                       type="text"
                       name="details"
                       defaultValue={details}
-                      value={inputDetails}
+                      
                       onChange={(e) => setDetails(e.target.value)}
                       className="input input-bordered"
                       required

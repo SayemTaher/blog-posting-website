@@ -156,7 +156,7 @@ const Add = () => {
                 </div>
               </div>
             </div>
-            <div className=" border-2 border-gray-600 p-3 mt-5 flex items-center gap-2 hover:bg-primaryBlue font-bold justify-center text-2xl rounded-full bg-primaryNavy text-white ">
+            <div className=" border-2 border-gray-600 p-3 mt-5 flex items-center gap-2 hover:bg-primaryBlue font-bold justify-center text-2xl rounded-full bg-primaryNavy  ">
               <MdOutlinePostAdd></MdOutlinePostAdd>
               <input type="submit" value="Create Post" id="" />
             </div>

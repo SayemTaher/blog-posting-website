@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet-async";
 import { Link, useLoaderData } from "react-router-dom";
 import { HiArrowLongRight } from "react-icons/hi2";
 import Blog from "../Blogs/Blog";
+import Newsletter from "../Newletter/Newsletter";
 const HeroSection = () => {
     
     const loadedBlogs = useLoaderData()
@@ -262,7 +263,9 @@ const HeroSection = () => {
                   }
                   
               </div>
-        </div>
+          </div>
+          
+          <Newsletter></Newsletter>
           
     </motion.div>
   );
