@@ -5,7 +5,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { Navigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../Provider/AuthProvider';
 
-const PrivateRoute = () => {
+const PrivateRoute = ({children}) => {
     const { user, loader } = useContext(AuthContext)
     const location = useLocation()
     if (loader) {

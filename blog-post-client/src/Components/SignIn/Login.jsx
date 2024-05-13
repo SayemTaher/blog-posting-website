@@ -1,5 +1,6 @@
 
 import React, { useContext } from "react";
+import { Helmet } from "react-helmet-async";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
@@ -41,7 +42,10 @@ const Login = () => {
     <div
       data-aos="fade-up"
       className=" min-h-screen flex flex-col justify-center bg-bgPrimary"
-    >
+      >
+          <Helmet>
+              <title>PostHeat | Login </title>
+          </Helmet>
       <div className="flex flex-col ml-5 mr-5 lg:flex-row md:flex-row gap-5 justify-center items-center lg:items-center lg:justify-between">
         <div data-aos="fade-up-right" className="w-full border-2 h-[500px] border-gray-100 max-w-sm p-6 m-auto mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800">
           <div className="flex justify-center mx-auto">

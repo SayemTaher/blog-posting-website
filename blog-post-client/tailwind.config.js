@@ -9,7 +9,7 @@ export default {
       colors: {
         bgPrimary: "#E2E6EB",
         bgSecondary: "#FFFFFF",
-        bgGray: "#E6E6E6",
+        colorGray: "#E6E6E6",
         colorPurple: "#DDD0E6",
         colorOrange: "#FFDDE1",
         colorGreen: "#CCF9EA",
