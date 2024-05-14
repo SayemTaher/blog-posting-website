@@ -69,7 +69,7 @@ async function run() {
         const result = await userWishListCollection
           .find({ "user.email": userEmail })
           .toArray();
-        res.send(result);
+          res.send(result);
       });
 
       app.get('/blogs/:id', async (req, res) => {
@@ -80,15 +80,31 @@ async function run() {
           const result = await userBlogCollection.findOne(query)
           res.send(result)
       })
+      app.get('/users', async (req, res) => {
+          const data = await usersDBCollection.find().toArray()
+          res.send(data)
+      })
    
-      app.delete("/wishlist/:id", async (req, res) => {
-        const id = req.params.id;
-        console.log("delete id with: ", req.params.id);
-        const query = { _id: new ObjectId(id) };
+    //   app.delete("/wishlist/:id", async (req, res) => {
+    //     const id = req.params.id;
+    //     console.log("delete id with: ", req.params.id);
+    //     const query = { _id: new ObjectId(id) };
+    //       const result = await userWishListCollection.deleteOne(query);
+    //       res.send(result)
+          
+    //   });
+      app.delete("/wishlist/:customID", async (req, res) => {
+        const customId = req.params.customID;
+        console.log("Deleting item with custom ID:", customId);
+
+        
+          const query = { customID: customId };
           const result = await userWishListCollection.deleteOne(query);
           res.send(result)
-          
+
+         
       });
+
       app.post('/comments', async (req, res) => {
           const data = req.body 
           console.log(req.body)
