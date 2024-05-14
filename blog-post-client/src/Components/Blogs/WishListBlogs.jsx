@@ -20,12 +20,13 @@ const WishListBlogs = ({ blog}) => {
     photoUrl,
     category,
     description,
-    details,
+      details,
+    customID,
     postedTime,
   } = blog;
 
-  const handleDelete = (_id) => {
-    console.log("Delete user with id", _id);
+  const handleDelete = (customID) => {
+    console.log("Delete user with id", customID);
 
     Swal.fire({
       title: "Are you sure?",
@@ -37,7 +38,7 @@ const WishListBlogs = ({ blog}) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/wishlist/${_id}`, {
+        fetch(`http://localhost:3000/wishlist/${customID}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -100,12 +101,12 @@ const WishListBlogs = ({ blog}) => {
           <div className="flex items-center mt-2 justify-between">
             <div className="flex justify-center text-center items-center gap-2 text-white bg-colorNavy rounded-full p-2 w-[130px] ">
               <BsArrowUpRight></BsArrowUpRight>
-              <Link to={`/details/${_id}`}>
+              <Link to={`/details/${customID}`}>
                 <button>Read More</button>
               </Link>
             </div>
             <div
-              onClick={() => handleDelete(blog._id)}
+              onClick={() => handleDelete(customID)}
               data-tip="Delete this item"
               className="flex tooltip items-center cursor-pointer gap-2 justify-center w-[120px] text-center bg-red-600 rounded-full text-white p-1 hover:bg-blue-900 hover:text-white"
             >

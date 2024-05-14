@@ -26,6 +26,7 @@ const Blog = ({ blog }) => {
        details,
        postedTime,
      } = blog;
+    const{_id : customID} = blog
      
 
      const currentDate = new Date();
@@ -34,13 +35,15 @@ const Blog = ({ blog }) => {
 
      const handleAddtoWishlist = () => {
        if (!user) {
-         toast.error("Please sign in first");
+           toast.error("Please sign in first");
+
          return;
        }
+       
 
 
          const wishListItem = {
-        
+            customID,
          user,
          title,
          photoUrl,
