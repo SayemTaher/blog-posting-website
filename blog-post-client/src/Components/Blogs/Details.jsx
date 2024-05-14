@@ -13,24 +13,25 @@ import Comment from "./Comment";
 
 const Details = () => {
  const { user } = useContext(AuthContext);
- const loadedBlogdata = useLoaderData();
- const [comment, setComment] = useState("");
+    const loadedBlogdata = useLoaderData();
+    const [comment, setComment] = useState("");
     const [receivedComments, setReceivedComments] = useState([]);
-     const { _id: blogId } = loadedBlogdata
-
+    const { _id: blogId } = loadedBlogdata
+    console.log(loadedBlogdata)
+    
  useEffect(() => {
    // Fetch comments for the current blog
    fetch(`http://localhost:3000/comments/${blogId}`)
      .then((res) => res.json())
      .then((data) => {
-       console.log(data);
+    //    console.log(data);
        setReceivedComments(data);
      });
- }, [loadedBlogdata._id]); // Ensure useEffect runs when the blog ID changes
+ }, [loadedBlogdata._id]); 
 
  const { _id, title, photoUrl, category, description, details, postedTime } =
-   loadedBlogdata;
- const dbUser = loadedBlogdata.user.email;
+     loadedBlogdata;
+ 
  const userPhoto = user.photoURL;
  const userName = user.displayName;
     const userEmail = user.email;
@@ -49,7 +50,7 @@ const Details = () => {
        userEmail,
      commentDate
    };
-   if (user.email === dbUser) {
+   if (user.email === loadedBlogdata.user.email) {
      toast.error("Action is not permitted!");
      return;
    }
@@ -77,7 +78,7 @@ const Details = () => {
       <div className=" flex items-center justify-between  mb-10 border-b-2 border-dashed border-blue-400 pb-4">
         <div className=" flex items-center text-2xl gap-2">
           <LuUserCheck2></LuUserCheck2>
-          <p>{dbUser}</p>
+          <p>{loadedBlogdata.user.email}</p>
         </div>
         <div className=" flex bg-blue-100 text-blue-400 rounded-3xl p-1 text-center justify-center w-[150px] items-center gap-2">
           <LuClock3></LuClock3>
@@ -115,13 +116,11 @@ const Details = () => {
         </div>
         <div className="mt-2">
           <span className="text-gray-600 text-lg font-bold">Details</span>
-          <p className="mt-2 text-gray-600 font-semibold text-sm ">
-            {details}
-          </p>
+          <p className="mt-2 text-gray-600 font-semibold text-sm ">{details}</p>
         </div>
 
         <div className="flex items-center justify-between mt-4">
-          {user.email === dbUser ? (
+          {user.email === loadedBlogdata.user.email ? (
             <Link to={`/update/${_id}`}>
               <button className="flex items-center gap-2 bg-colorNavy text-white p-2 text-center justify-center rounded-xl w-[120px]">
                 {" "}
@@ -145,7 +144,7 @@ const Details = () => {
               tabindex="0"
               role="link"
             >
-              {dbUser}
+              {loadedBlogdata.user.email}
             </a>
           </div>
         </div>
@@ -164,10 +163,7 @@ const Details = () => {
             <form onSubmit={handleComment}>
               <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                 <div>
-                  <label
-                    className="text-gray-700 "
-                    for="passwordConfirmation"
-                  >
+                  <label className="text-gray-700 " for="passwordConfirmation">
                     Share your thoughts
                   </label>
                   <textarea
@@ -193,17 +189,17 @@ const Details = () => {
             </form>
           </section>
         </div>
-          </div>
-          <div className="flex flex-col gap-2 mt-5 mb-5 ">
-              <h1 className="bg-blue-100 text-blue-500 rounded-xl text-2xl lg:text-3xl text-semibold p-2 text-center w-[300px]">Latest Comments </h1>
-              <div className="flex flex-col gap-5 ">
-                  {
-                      receivedComments.map(comments =><Comment key={comments._id} comments={comments}></Comment> )
-                  }
-                  
-              </div>
-          </div>
-          
+      </div>
+      <div className="flex flex-col gap-2 mt-5 mb-5 ">
+        <h1 className="bg-blue-100 text-blue-500 rounded-xl text-2xl lg:text-3xl text-semibold p-2 text-center w-[300px]">
+          Latest Comments{" "}
+        </h1>
+        <div className="flex flex-col gap-5 ">
+          {receivedComments.map((comments) => (
+            <Comment key={comments._id} comments={comments}></Comment>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

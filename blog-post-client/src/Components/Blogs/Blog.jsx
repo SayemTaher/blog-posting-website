@@ -26,7 +26,7 @@ const Blog = ({ blog }) => {
        details,
        postedTime,
      } = blog;
-     const [addedItems, setAddedItems] = useState([]);
+     
 
      const currentDate = new Date();
      const options = { day: "numeric", month: "long", year: "numeric" };
@@ -38,14 +38,9 @@ const Blog = ({ blog }) => {
          return;
        }
 
-       // Check if the item is already in the wishlist
-       if (addedItems.some((item) => item._id === _id)) {
-         toast.error("This item is already in your wishlist");
-         return;
-       }
 
          const wishListItem = {
-           _id,
+        
          user,
          title,
          photoUrl,
@@ -54,9 +49,6 @@ const Blog = ({ blog }) => {
          details,
          AddedTime,
        };
-
-       
-       setAddedItems((prevItems) => [...prevItems, wishListItem]);
 
        // Send the item to the server to add it to the wishlist
        fetch("http://localhost:3000/wishlist", {
