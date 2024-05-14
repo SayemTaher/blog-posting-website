@@ -50,7 +50,7 @@ const Update = () => {
                setCategory('')
                setDescription('')
                setDetails('')
-               
+
            });
        
     }
@@ -63,9 +63,10 @@ const Update = () => {
           alt=""
         />
         <div className='flex gap-5 items-center justify-center mt-10 mb-10 '>
-          <div className='flex gap-2 flex-col'>
+                <div className='flex gap-2 flex-col'>
+                    <span className='text-2xl font-semibold text-blue-500 mb-2'>POSTHEAT</span>
             <h1 className='text-2xl lg:text-4xl font-semibold text-colorNavy'>Update Details Here</h1>
-            <p className='text-gray-600 text-sm w-[400px]'>We respect your privacy and we allow you to share your thoughts whenever you want</p>
+            <p className='text-gray-600 text-sm w-[400px]'>We respect your privacy and we allow you to share your thoughts whenever you want...</p>
           </div>
           <div className='border-2 border-gray-600 border-dashed rounded-md'>
             <section className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md">

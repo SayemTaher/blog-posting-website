@@ -10,7 +10,7 @@ const BlogShow = () => {
             <span className="text-blue-500 tracking-wide">POSTHEAT</span>
           </h1>
 
-          <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-16 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid grid-cols-1 animate__animated animate__backInRight gap-8 mt-8 xl:mt-12 xl:gap-16 md:grid-cols-2 xl:grid-cols-3">
             <div className="flex flex-col items-center justify-between p-6 space-y-3 text-center bg-gray-100 rounded-xl ">
               <span className="inline-block p-3 text-blue-500 bg-blue-100 rounded-full ">
                 <svg
@@ -34,9 +34,10 @@ const BlogShow = () => {
               </h1>
 
               <p className="text-gray-500 dark:text-gray-300">
-                              We value users feelings, and what can be better that being able to share your thoughts on 
-                              latest trends any time and also understand different peoples perspective  all together in 
-                              one place ? You are in the right place..
+                We value users feelings, and what can be better that being able
+                to share your thoughts on latest trends any time and also
+                understand different peoples perspective all together in one
+                place ? You are in the right place..
               </p>
 
               <a
@@ -82,8 +83,10 @@ const BlogShow = () => {
               </h1>
 
               <p className="text-gray-500 ">
-                              It's our users that what matters and opinions can be completely your own yet can still be shared.
-                              You can learn and grow together with people people that shares common ground while respecting each others perspective.
+                It's our users that what matters and opinions can be completely
+                your own yet can still be shared. You can learn and grow
+                together with people people that shares common ground while
+                respecting each others perspective.
               </p>
 
               <a
@@ -129,7 +132,9 @@ const BlogShow = () => {
               </h1>
 
               <p className="text-gray-500 ">
-                To use the site to the fullest we encourage you to have your own account first.This way you can stay up to date within the platform while beimg able to experience all the features
+                To use the site to the fullest we encourage you to have your own
+                account first.This way you can stay up to date within the
+                platform while beimg able to experience all the features
               </p>
 
               <a
