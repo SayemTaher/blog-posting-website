@@ -6,6 +6,7 @@ import { Link, useLoaderData } from "react-router-dom";
 import { HiArrowLongRight } from "react-icons/hi2";
 import Blog from "../Blogs/Blog";
 import Newsletter from "../Newletter/Newsletter";
+import BlogShow from "../BlogShow/BlogShow";
 const HeroSection = () => {
     
     const loadedBlogs = useLoaderData()
@@ -266,6 +267,7 @@ const HeroSection = () => {
           </div>
           
           <Newsletter></Newsletter>
+          <BlogShow></BlogShow>
           
     </motion.div>
   );

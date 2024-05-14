@@ -79,16 +79,13 @@ const Blog = ({ blog }) => {
          });
      };
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 1, duration: 0.5 }}
+    <div
+      
     >
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 0.5 }}
-        className="flex gap-5 bg-white flex-col shadow-md z-50  items-center h-[600px] w-full"
+      <div
+       
+              data-aos="fade-up-left"
+        className="flex gap-5 bg-white flex-col  z-50  items-center h-[600px] w-full"
       >
         <div>
           <img
@@ -137,8 +134,8 @@ const Blog = ({ blog }) => {
             </div>
           </div>
         </div>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 };
 export default Blog;

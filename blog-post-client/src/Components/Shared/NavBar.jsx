@@ -75,7 +75,7 @@ const NavBar = () => {
                 {navigation}
               </ul>
             </div>
-            <a className="btn btn-ghost text-3xl tracking-wider ">PostHeat</a>
+            <a className="btn btn-ghost text-3xl font-bold text-blue-600 tracking-wider ">POSTHEAT</a>
           </div>
           <div className="navbar-center hidden lg:flex">
             <ul className="menu menu-horizontal px-1">{navigation}</ul>
