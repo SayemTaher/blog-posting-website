@@ -112,7 +112,7 @@ const NavBar = () => {
                     <Link to="/">
                       <button
                         onClick={handleLogout}
-                        className="bg-colorBlue w-[80px] text-white font-bold text-xs p-2 rounded-full text-center"
+                        className="bg-red-500 w-[80px] text-white font-bold text-xs p-2 rounded-full text-center"
                       >
                         LogOut
                       </button>
@@ -120,7 +120,7 @@ const NavBar = () => {
                   </div>
                 ) : (
                   <Link to="/login">
-                    <button className="rounded-full w-[120px] hover:bg-colorBlue text-center bg-colorNavy font-bold text-bgPrimary p-2 ">
+                    <button className="rounded-full w-[120px] hover:bg-blue-500 text-center bg-blue-600 font-bold text-bgPrimary p-2 ">
                       Sign In
                     </button>
                   </Link>
