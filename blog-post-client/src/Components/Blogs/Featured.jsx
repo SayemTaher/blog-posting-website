@@ -3,6 +3,7 @@ import { useLoaderData } from 'react-router-dom';
 import 'ka-table/style.css';
 import { Table } from 'ka-table';
 import { DataType, SortingMode } from 'ka-table/enums';
+import { GrStatusInfo } from "react-icons/gr";
 
 const Featured = () => {
     const posts = useLoaderData();
@@ -39,6 +40,14 @@ const Featured = () => {
 
     return (
         <div className='pt-20 pb-20'>
+            <div className='pt-5 pb-10'>
+                <h1 className='text-2xl lg:text-4xl font-semibold text-center w-[300px] bg-green-100 p-3 rounded-full text-green-600 '>Top 10 Blogs </h1>
+                <div className='bg-blue-100 p-2 max-w-[650px] rounded-xl text-lg mt-5 text-center flex gap-2 items-center'>
+                    <GrStatusInfo></GrStatusInfo>
+                    <span>Top posts are calculated based on the length of the blog description</span>
+
+                </div>
+            </div>
             <Table
                 columns={columns}
                 data={dataArray}
