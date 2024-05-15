@@ -66,7 +66,7 @@ const TotalBlog = ({ data }) => {
     <div className="pb-10">
       <div
         data-aos="fade-up-left"
-        className="flex gap-5 bg-white border-2 border-gray-100 flex-col rounded-xl shadow-xl  z-50  items-center h-[800px] w-[800px]"
+        className="flex gap-5 bg-white border-2 border-gray-100 flex-col rounded-xl shadow-xl  z-50  items-center h-[800px] w-full"
       >
         <div>
           <img
