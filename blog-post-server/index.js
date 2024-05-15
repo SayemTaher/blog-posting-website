@@ -54,23 +54,7 @@ async function run() {
       const result = await testBlogs.find().toArray();
       res.send(result);
     });
-    // app.get("/blogs/:id", async (req, res) => {
-    //   try {
-    //     const id = req.params.id;
-    //     const query = {
-    //       _id: new ObjectId(id),
-    //     };
-    //     const result = await userBlogCollection.findOne(query);
-    //     if (!result) {
-    //       // If no document found with the given ID
-    //       return res.status(404).send("Test blog not found");
-    //     }
-    //     res.send(result);
-    //   } catch (error) {
-    //     console.error("Error:", error);
-    //     res.status(500).send("Internal Server Error");
-    //   }
-    // });
+   
 
 
 
@@ -141,14 +125,20 @@ async function run() {
       }
     });
     // category based
-    app.get("/blogs/:category", async (req, res) => {
-      const category = req.params.category;
-      console.log(req.params.category);
-      const query = { category: category };
-      // Query MongoDB for blogs with the specified category
+    // Adjust this route to specifically handle category filtering
+app.get("/blogs/category/:category", async (req, res) => {
+  const { category } = req.params;
+  console.log("Filtering by category:", category);
+  const query = { category };
+  try {
       const blogs = await userBlogCollection.find(query).toArray();
       res.send(blogs);
-    });
+  } catch (error) {
+      console.error("Error:", error);
+      res.status(500).send("Internal Server Error");
+  }
+});
+
 
     app.post("/wishlist", async (req, res) => {
       const data = req.body;
@@ -178,13 +168,24 @@ async function run() {
       }
 
       try {
-        const result = await userBlogCollection.find(query).toArray();
+        let result;
+        if (searchText) {
+          // If searchText is provided, sort the results based on relevance
+          result = await userBlogCollection
+            .find(query, { score: { $meta: "textScore" } })
+            .sort({ score: { $meta: "textScore" } })
+            .toArray();
+        } else {
+          // If no searchText, return all blogs
+          result = await userBlogCollection.find(query).toArray();
+        }
         res.send(result);
       } catch (error) {
         console.error("Error:", error);
         res.status(500).send("Internal Server Error");
       }
     });
+    
 
     // top posts
     app.get("/posts", async (req, res) => {
@@ -220,26 +221,7 @@ async function run() {
       }
     });
 
-    app.get("/blogs", async (req, res) => {
-      const { category, searchText } = req.query;
-      const query = {};
-
-      if (category) {
-        query.category = category;
-      }
-
-      if (searchText) {
-        query.$text = { $search: searchText };
-      }
-
-      try {
-        const result = await userBlogCollection.find(query).toArray();
-        res.send(result);
-      } catch (error) {
-        console.error("Error:", error);
-        res.status(500).send("Internal Server Error");
-      }
-    });
+    
 
     app.delete("/wishlist/:customID", async (req, res) => {
       const customId = req.params.customID;
