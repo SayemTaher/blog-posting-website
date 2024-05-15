@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useContext } from 'react';
+import { Helmet } from 'react-helmet-async';
 import toast from 'react-hot-toast';
 import { useLoaderData } from 'react-router-dom';
 
@@ -33,7 +34,7 @@ const Update = () => {
 
     const handleUpdate = (e) => {
         e.preventDefault()
-        fetch(`http://localhost:3000/blogs/${_id}`, {
+        fetch(`https://blog-post-server-sable.vercel.app/blogs/${_id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
@@ -52,6 +53,7 @@ const Update = () => {
 
     return (
       <div className="pt-20 ">
+        <Helmet><title>POSTHEAT | Update  Blog</title></Helmet>
         <img
                 src="https://i.ibb.co/RBqvYpW/top-view-person-writing-laptop-with-copy-space.jpg"
                 className='h-[400px] object-cover w-full'

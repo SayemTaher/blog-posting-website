@@ -1,4 +1,6 @@
 import React from 'react';
+import { BsArrowUpRight } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 const WishListBlogs = ({ blog, onDelete }) => {
@@ -23,7 +25,7 @@ const WishListBlogs = ({ blog, onDelete }) => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:3000/wishlist/${customID}`, {
+                fetch(`https://blog-post-server-sable.vercel.app/wishlist/${customID}`, {
                     method: "DELETE",
                 })
                 .then((res) => res.json())
@@ -62,6 +64,12 @@ const WishListBlogs = ({ blog, onDelete }) => {
                     <span className="text-gray-600 text-left mb-2 mt-2">{details.slice(0, 300)}</span>
                 </div>
                 <div className="flex items-center mt-2 justify-between">
+                <div className="flex justify-center text-center items-center gap-2 text-white bg-colorNavy rounded-full p-2 w-[130px] ">
+              <BsArrowUpRight></BsArrowUpRight>
+              <Link to={`/details/${customID}`}>
+                <button>Read More</button>
+              </Link>
+            </div>
                     <button onClick={() => handleDelete(customID)} className="flex tooltip items-center cursor-pointer gap-2 justify-center w-[120px] text-center bg-red-600 rounded-full text-white p-1 hover:bg-blue-900 hover:text-white">Delete</button>
                 </div>
             </div>

@@ -29,7 +29,7 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
-        loader: () => fetch("http://localhost:3000/blogs"),
+        loader: () => fetch("https://blog-post-server-sable.vercel.app/blogs"),
       },
       {
         path: "/login",
@@ -51,17 +51,17 @@ const router = createBrowserRouter([
         path: "/all/:id",
         element: <All></All>,
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/blogs/${params.id}`),
+          fetch(`https://blog-post-server-sable.vercel.app/blogs/${params.id}`),
       },
       {
         path: "/all",
         element: <All></All>,
-        loader: () => fetch("http://localhost:3000/blogs"),
+        loader: () => fetch("https://blog-post-server-sable.vercel.app/blogs"),
       },
       {
         path: "/featured",
         element: <Featured></Featured>,
-        loader: () => fetch("http://localhost:3000/posts"),
+        loader: () => fetch("https://blog-post-server-sable.vercel.app/posts"),
       },
       {
         path: "/wish",
@@ -88,7 +88,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/blogs/${params.id}`),
+          fetch(`https://blog-post-server-sable.vercel.app/blogs/${params.id}`),
       },
       {
         path: "/update/:id",
@@ -99,7 +99,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/blogs/${params.id}`),
+          fetch(`https://blog-post-server-sable.vercel.app/blogs/${params.id}`),
       },
     ],
   },

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import TotalBlog from "./TotalBlog";
+import { Helmet } from "react-helmet-async";
 
 const All = () => {
   const [loadedData, setLoadedData] = useState([]);
@@ -15,7 +16,7 @@ const All = () => {
 
   const fetchAllBlogs = async () => {
     try {
-      const response = await fetch("http://localhost:3000/blogs");
+      const response = await fetch("https://blog-post-server-sable.vercel.app/blogs");
       const data = await response.json();
       setLoadedData(data);
     } catch (error) {
@@ -26,10 +27,11 @@ const All = () => {
   const handleSearch = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/blogs?searchText=${searchText}`
+        `https://blog-post-server-sable.vercel.app/blogs?searchText=${searchText}`
       );
       const data = await response.json();
-      setSearchResults(data);
+      console.log(data)
+      setLoadedData(data);
       setSearchText(""); // Clear search text
     } catch (error) {
       console.error("Error:", error);
@@ -39,7 +41,7 @@ const All = () => {
 
   const handleCategoryChange = async (category) => {
     try {
-        const response = await fetch(`http://localhost:3000/blogs/category/${category}`);
+        const response = await fetch(`https://blog-post-server-sable.vercel.app/blogs/category/${category}`);
         const data = await response.json();
         setSearchResults(data);
         if (data.length === 0) {
@@ -53,6 +55,7 @@ const All = () => {
 
   return (
     <div className="pt-20">
+      <Helmet><title>POSTHEAT | All Blogs</title></Helmet>
       <div className="flex pl-4 pr-5 -mt-3 bg-white items-center fixed z-50 w-full container mx-auto justify-between border-b-2 border-gray-200 pb-5">
         <div className="flex items-center w-full justify-between">
           <div className="pt-5">

@@ -54,7 +54,7 @@ const Blog = ({ blog }) => {
        };
 
        // Send the item to the server to add it to the wishlist
-       fetch("http://localhost:3000/wishlist", {
+       fetch("https://blog-post-server-sable.vercel.app/wishlist", {
          method: "POST",
          headers: {
            "content-type": "application/json",

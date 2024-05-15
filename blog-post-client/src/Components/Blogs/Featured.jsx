@@ -4,6 +4,7 @@ import 'ka-table/style.css';
 import { Table } from 'ka-table';
 import { DataType, SortingMode } from 'ka-table/enums';
 import { GrStatusInfo } from "react-icons/gr";
+import { Helmet } from 'react-helmet-async';
 
 const Featured = () => {
     const posts = useLoaderData();
@@ -15,7 +16,7 @@ const Featured = () => {
         title: post.title,
         owner: post.owner.displayName ? post.owner.displayName : 'Not Available',
         ownerEmail: post.owner.email,
-        ownerProfilePicture: post.owner.photoURL ? post.owner.photoURL : 'Not Available',
+        ownerProfilePicture: post.owner.photoURL ? post.owner.photoURL   : 'Not Available',
         id: post.id
     }));
 
@@ -30,16 +31,20 @@ const Featured = () => {
             key: 'ownerProfilePicture',
             title: 'Profile Picture',
             dataType: DataType.String,
-            cell: ({ rowData }) => (
-                rowData.ownerProfilePicture !== 'Not Available' ? (
-                    <img src={rowData.ownerProfilePicture} alt="Profile" style={{ width: '50px', height: '50px', borderRadius: '50%' }} />
-                ) : 'Not Available'
-            )
+            cell: ( rowData ) => {
+                console.log(rowData)
+            }
+              
+                
+            
         }
     ];
 
     return (
         <div className='pt-20 pb-20'>
+            <Helmet>
+                <title>POSTHEAT | Featured Blogs</title>
+            </Helmet>
             <div className='pt-5 pb-10'>
                 <h1 className='text-2xl lg:text-4xl font-semibold text-center w-[300px] bg-green-100 p-3 rounded-full text-green-600 '>Top 10 Blogs </h1>
                 <div className='bg-blue-100 p-2 max-w-[650px] rounded-xl text-lg mt-5 text-center flex gap-2 items-center'>
@@ -52,6 +57,14 @@ const Featured = () => {
                 columns={columns}
                 data={dataArray}
                 rowKeyField="id"
+                childComponents={{
+                    cellText : { content : (props) => {
+                        console.log(props)
+                        if(props.column.key === 'ownerProfilePicture') {
+                            return <img className='h-[80px] object-cover w-[80px] rounded-full' src={props.rowData.ownerProfilePicture ? props.rowData.ownerProfilePicture : 'https://i.ibb.co/nC23FQB/Screenshot-2024-04-15-at-15-53-08.png'}></img>
+                        }
+                    } }
+                }}
                 sortingMode={SortingMode.None}
             />
         </div>

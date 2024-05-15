@@ -20,7 +20,7 @@ const HeroSection = () => {
       className="  text-white text-center py-24"
     >
       <Helmet>
-        <title>PostHeat | Home</title>
+        <title>POSTHEAT | Home</title>
       </Helmet>
       <div className="container mx-auto min-h-screen flex flex-col ">
         <div className=" w-full overflow-hidden bg-white  shadow-md  ">

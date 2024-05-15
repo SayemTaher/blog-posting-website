@@ -32,7 +32,7 @@ const Add = () => {
         description,
      details,postedTime
     };
-    fetch("http://localhost:3000/blogs", {
+    fetch("https://blog-post-server-sable.vercel.app/blogs", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -53,7 +53,7 @@ const Add = () => {
   return (
     <div className="hero  bg-[url('https://i.ibb.co/RBqvYpW/top-view-person-writing-laptop-with-copy-space.jpg')] bg-no-repeat bg-cover ">
       <Helmet>
-        <title>PostHeat | Post Blog</title>
+        <title>POSTHEAT | Post Blog</title>
       </Helmet>
       <div className="hero-content min-h-screen flex-col p-3 rounded-xl">
         <div className="card shrink-0  shadow-2xl w-full bg-base-100">

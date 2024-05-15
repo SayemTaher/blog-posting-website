@@ -76,7 +76,7 @@ const Register = () => {
           setPassword('')
 
           
-          fetch("http://localhost:3000/users", {
+          fetch("https://blog-post-server-sable.vercel.app/users", {
               method: 'POST',
               headers: 
                   {
@@ -103,7 +103,7 @@ const Register = () => {
       className=" flex bg-bgPrimary flex-col justify-center min-h-screen"
       >
           <Helmet>
-              <title>PostHeat | Register</title>
+              <title>POSTHEAT | Register</title>
           </Helmet>
       <div className="flex justify-between ml-5 mr-5 gap-5 flex-col lg:flex-row">
         <div

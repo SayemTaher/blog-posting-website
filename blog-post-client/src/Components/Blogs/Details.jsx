@@ -10,6 +10,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
 import Comment from "./Comment";
+import { Helmet } from "react-helmet-async";
 
 const Details = () => {
   
@@ -25,7 +26,7 @@ const Details = () => {
     
  useEffect(() => {
    // Fetch comments for the current blog
-   fetch(`http://localhost:3000/comments/${blogId}`)
+   fetch(`https://blog-post-server-sable.vercel.app/comments/${blogId}`)
      .then((res) => res.json())
      .then((data) => {
     //    console.log(data);
@@ -58,7 +59,7 @@ const Details = () => {
      toast.error("Action is not permitted!");
      return;
    }
-   fetch("http://localhost:3000/comments", {
+   fetch("https://blog-post-server-sable.vercel.app/comments", {
      method: "POST",
      headers: {
        "Content-Type": "application/json",
@@ -79,6 +80,7 @@ const Details = () => {
 
   return (
     <div className="bg-white flex flex-col justify-center  min-h-screen">
+      <Helmet><title>POSTHEAT | Update  Blog</title></Helmet>
       <div className=" flex items-center justify-between  mb-10 border-b-2 border-dashed border-blue-400 pb-4">
         <div className=" flex items-center text-2xl gap-2">
           <LuUserCheck2></LuUserCheck2>
