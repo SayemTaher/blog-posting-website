@@ -16,7 +16,7 @@ app.use(express.json());
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.vybo3pc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -26,7 +26,7 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    
+
     // await client.connect();
     const usersDBCollection = client.db("BlogDB").collection("users");
     const userBlogCollection = client.db("BlogDB").collection("blogs");
@@ -37,8 +37,8 @@ async function run() {
     async function setupTextIndex() {
       await userBlogCollection.createIndex({ title: "text" });
     }
-    
-    
+
+
     //   post users
     app.post("/users", async (req, res) => {
       const user = req.body;
@@ -51,7 +51,7 @@ async function run() {
       const result = await testBlogs.find().toArray();
       res.send(result);
     });
-   
+
 
 
 
@@ -59,10 +59,10 @@ async function run() {
       try {
         const id = req.params.id;
 
-        // Log the id to see what value is being received
+
         console.log("Received ID:", id);
 
-        // Validate if ID is in the correct format for ObjectId
+
         if (!ObjectId.isValid(id)) {
           return res.status(400).send("Invalid ObjectId");
         }
@@ -72,7 +72,7 @@ async function run() {
         };
         const result = await userBlogCollection.findOne(query);
         if (!result) {
-          // If no document found with the given ID
+
           return res.status(404).send("Test blog not found");
         }
         res.send(result);
@@ -82,10 +82,7 @@ async function run() {
       }
     });
 
-    // app.get('/blogs',async(req,res) => {
-    //   const data = await userBlogCollection.find().toArray()
-    //   res.send(data)
-    // })
+
 
 
 
@@ -113,13 +110,13 @@ async function run() {
       try {
         let result;
         if (searchText) {
-          // If searchText is provided, sort the results based on relevance
+
           result = await userBlogCollection
             .find(query, { score: { $meta: "textScore" } })
             .sort({ score: { $meta: "textScore" } })
             .toArray();
         } else {
-          // If no searchText, return all blogs
+
           result = await userBlogCollection.find(query).toArray();
         }
         res.send(result);
@@ -128,20 +125,19 @@ async function run() {
         res.status(500).send("Internal Server Error");
       }
     });
-    // category based
-    // Adjust this route to specifically handle category filtering
-app.get("/blogs/category/:category", async (req, res) => {
-  const { category } = req.params;
-  console.log("Filtering by category:", category);
-  const query = { category };
-  try {
-      const blogs = await userBlogCollection.find(query).toArray();
-      res.send(blogs);
-  } catch (error) {
-      console.error("Error:", error);
-      res.status(500).send("Internal Server Error");
-  }
-});
+
+    app.get("/blogs/category/:category", async (req, res) => {
+      const { category } = req.params;
+      console.log("Filtering by category:", category);
+      const query = { category };
+      try {
+        const blogs = await userBlogCollection.find(query).toArray();
+        res.send(blogs);
+      } catch (error) {
+        console.error("Error:", error);
+        res.status(500).send("Internal Server Error");
+      }
+    });
 
 
     app.post("/wishlist", async (req, res) => {
@@ -189,44 +185,12 @@ app.get("/blogs/category/:category", async (req, res) => {
         res.status(500).send("Internal Server Error");
       }
     });
-    
 
-    // top posts
-    // app.get("/posts", async (req, res) => {
-    //   try {
-    //     // Fetch top 10 posts based on word count of long description
-    //     const topPosts = await userBlogCollection.find().toArray();
 
-    //     // Sort the posts based on the word count of the long description
-    //     topPosts.sort((a, b) => {
-    //       // Calculate word count for a and b
-    //       const wordCountA = a.details.split(" ").length;
-    //       const wordCountB = b.details.split(" ").length;
-    //       // Sort in descending order
-    //       return wordCountB - wordCountA;
-    //     });
 
-    //     // Get the top 10 posts
-    //     const top10Posts = topPosts.slice(0, 10);
-
-    //     // Format the response data to include Serial Number
-    //     const formattedPosts = top10Posts.map((post, index) => ({
-    //       serialNumber: index + 1,
-    //       title: post.title,
-    //       owner: post.user, // Assuming "user" contains the owner's name
-    //       ownerProfilePicture: post.user.profilePicture, // Assuming "profilePicture" is the field for the owner's profile picture
-    //     }));
-
-    //     // Send the formatted posts as response
-    //     res.send(formattedPosts);
-    //   } catch (error) {
-    //     console.error("Error:", error);
-    //     res.status(500).send("Internal Server Error");
-    //   }
-    // });
     app.get("/posts", async (req, res) => {
       try {
-        // Use aggregation to calculate word count, sort, and get top 10 posts
+
         const topPosts = await userBlogCollection.aggregate([
           {
             $project: {
@@ -238,25 +202,25 @@ app.get("/blogs/category/:category", async (req, res) => {
           { $sort: { wordCount: -1 } },
           { $limit: 10 }
         ]).toArray();
-    
-        // Format the response data to include Serial Number
+
+
         const formattedPosts = topPosts.map((post, index) => ({
           serialNumber: index + 1,
           title: post.title,
           owner: post.user,
           ownerProfilePicture: post.user.profilePicture
         }));
-    
-        // Send the formatted posts as response
+
+
         res.send(formattedPosts);
       } catch (error) {
         console.error("Error:", error);
         res.status(500).send("Internal Server Error");
       }
     });
-    
 
-    
+
+
 
     app.delete("/wishlist/:customID", async (req, res) => {
       const customId = req.params.customID;
