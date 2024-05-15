@@ -39,19 +39,17 @@ const All = () => {
 
   const handleCategoryChange = async (category) => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/blogs/${category}`
-      );
-      const data = await response.json();
+        const response = await fetch(`http://localhost:3000/blogs/category/${category}`);
+        const data = await response.json();
         setSearchResults(data);
         if (data.length === 0) {
-            toast.error('No data found! displaying all!')
-            
+            toast.error('No data found! Displaying all!');
         }
     } catch (error) {
-      console.error("Error fetching blogs by category:", error);
+        console.error("Error fetching blogs by category:", error);
     }
-  };
+};
+
 
   return (
     <div className="pt-20">

@@ -80,7 +80,7 @@ const Blog = ({ blog }) => {
       <div
        
               data-aos="fade-up-left"
-        className="flex gap-5 bg-white flex-col  z-50  items-center h-[600px] w-full"
+        className="flex gap-5 bg-white  flex-col  z-50  items-center h-[630px] w-full"
       >
         <div>
           <img
@@ -89,12 +89,12 @@ const Blog = ({ blog }) => {
             alt={`img of ${_id}`}
           />
         </div>
-        <div className="flex flex-col ml-4 mr-4  justify-between">
-          <div className="flex items-center justify-between mb-2">
+        <div className="flex flex-col ml-4 mr-4 h-[340px]  justify-between">
+          <div className="flex items-center justify-between  ">
             <p className=" text-blue-500  ">{category}</p>
             <span className="text-gray-500">{postedTime}</span>
           </div>
-          <div className="flex gap-2 text-left flex-col">
+          <div className="flex  text-left justify-between flex-col">
             <motion.h1
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -105,13 +105,13 @@ const Blog = ({ blog }) => {
             </motion.h1>
             <p className="text-gray-600">{description.slice(0, 150)}</p>
           </div>
-          <div className="mt-2 flex flex-col  text-left items-start justify-start mb-2">
+          <div className=" flex flex-col  text-left items-start justify-start ">
             <span className="text-lg font-bold text-colorNavy">Remarks </span>
             <span className="text-gray-600 text-left mb-2 mt-2">
               {details.slice(0, 200)}
             </span>
           </div>
-          <div className="flex items-center mt-2 justify-between">
+          <div className="flex items-center  justify-between">
             <div className="flex justify-center text-center items-center gap-2 text-white bg-colorNavy rounded-full p-2 w-[130px] ">
               <BsArrowUpRight></BsArrowUpRight>
               <Link to={`/details/${_id}`}>

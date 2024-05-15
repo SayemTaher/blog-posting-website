@@ -11,7 +11,7 @@ const Newsletter = () => {
         
     }
     return (
-      <div className="mt-10 mb-10" data-aos="fade-up-right">
+      <div className="mt-28 mb-28" data-aos="fade-up-right">
         <section className="flex items-center flex-1">
           <div className="flex flex-col w-full ">
             <motion.h1

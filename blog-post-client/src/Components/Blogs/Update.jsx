@@ -45,11 +45,6 @@ const Update = () => {
            .then((data) => {
              console.log(data);
                toast.success("Blog Updated Successfully!");
-               setTitle('')
-               setPhotUrl('')
-               setCategory('')
-               setDescription('')
-               setDetails('')
 
            });
        

@@ -31,7 +31,7 @@ const HeroSection = () => {
           />
 
           <div className="p-6">
-            <div className="flex flex-col justify-center gap-2 items-center">
+            <div className="flex flex-col justify-center gap-5 items-center">
               <span className="text-2xl font-medium  text-blue-700 tracking-wider uppercase ">
                 POSTHEAT
               </span>
@@ -65,11 +65,11 @@ const HeroSection = () => {
               <div className="flex gap-2 items-center -mr-10 justify-center">
                 <Link to="/register">
                   {" "}
-                  <button className="bg-blue-700 text-white text-center w-[150px] mt-2 rounded-full p-2 text-sm  tracking-wide">
-                    Register For Free{" "}
+                  <button className="bg-blue-700 text-white text-center w-[150px] mt-5 mb-5 rounded-full p-2 text-sm  tracking-wide">
+                    Register For Free
                   </button>
                 </Link>
-                <HiArrowLongRight className="text-blue-600 mt-3 text-4xl"></HiArrowLongRight>
+                <HiArrowLongRight className="text-blue-600  text-4xl"></HiArrowLongRight>
               </div>
             </div>
           </div>
@@ -100,10 +100,7 @@ const HeroSection = () => {
                     Accessibility tools for designers and developers
                   </a>
                   <p className="mt-2 text-gray-600 dark:text-gray-300">
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Tempora expedita dicta totam aspernatur doloremque.
-                    Excepturi iste iusto eos enim reprehenderit nisi, accusamus
-                    delectus nihil quis facere in modi ratione libero!
+                  As the world pivots to more digital-centric approaches, education is not left behind. The traditional chalk-and-talk classrooms are increasingly being replaced by digital platforms that offer interactive and personalized learning experiences. This blog post delves into the evolution of digital classrooms, highlighting the benefits they bring to the education sector.
                   </p>
                 </div>
 

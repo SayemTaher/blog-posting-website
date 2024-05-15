@@ -2,7 +2,7 @@ import React from 'react';
 import "animate.css";
 const BlogReview = () => {
     return (
-      <div className="mt-10 mb-10 border-t-2 border-dashed border-blue-100 pt-5 ">
+      <div className=" border-t-2  border-dashed border-blue-100 pt-5 ">
         <section class="bg-white dark:bg-gray-900">
           <div class="container px-6 py-10 mx-auto">
             <div class="mt-6 md:flex md:items-center md:justify-between">

@@ -2,7 +2,7 @@ import "animate.css";
 
 const BlogShow = () => {
   return (
-    <div className="mt-5 mb-5 border-t-2 border-blue-100 border-dashed">
+    <div className=" border-t-2  border-blue-100 mt-32 mb-28 border-dashed">
       <section className="bg-white ">
         <div className="container px-6 py-10 mx-auto">
           <h1 className="text-2xl animate__animated animate__backInLeft  text-center text-gray-800 capitalize font-semibold lg:text-5xl ">
