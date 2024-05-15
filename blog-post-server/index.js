@@ -1,22 +1,17 @@
-const express = require('express')
+const express = require("express");
 
-const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb"); 
-const cors = require('cors')
-require('dotenv').config()
-const port = process.env.PORT || 3000 
-const app = express() 
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+const cors = require("cors");
+require("dotenv").config();
+const port = process.env.PORT || 3000;
+const app = express();
 
-// middlewares 
+// middlewares
 
-app.use(cors())
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
 
-
-
-
-
-// database connect 
-
+// database connect
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.vybo3pc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
@@ -24,27 +19,29 @@ const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@clu
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
-    strict: false, 
+    strict:false,
     deprecationErrors: true,
   },
 });
 
-
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
+
+    
+
+    await client.connect();
     const usersDBCollection = client.db("BlogDB").collection("users");
     const userBlogCollection = client.db("BlogDB").collection("blogs");
     const userWishListCollection = client.db("BlogDB").collection("wishlists");
     const userComments = client.db("BlogDB").collection("comments");
-    // In MongoDB shell
-    
+    const testBlogs = client.db("BlogDB").collection("testBlog");
+    const { ObjectId } = require("mongodb");
     async function setupTextIndex() {
       await userBlogCollection.createIndex({ title: "text" });
     }
-      await client.connect();
-      await setupTextIndex();
-    // Send a ping to confirm a successful connection
+    await setupTextIndex();
+    
     //   post users
     app.post("/users", async (req, res) => {
       const user = req.body;
@@ -52,75 +49,106 @@ async function run() {
       const result = await usersDBCollection.insertOne(user);
       res.send(result);
     });
+
+    app.get("/test", async (req, res) => {
+      const result = await testBlogs.find().toArray();
+      res.send(result);
+    });
+    // app.get("/blogs/:id", async (req, res) => {
+    //   try {
+    //     const id = req.params.id;
+    //     const query = {
+    //       _id: new ObjectId(id),
+    //     };
+    //     const result = await userBlogCollection.findOne(query);
+    //     if (!result) {
+    //       // If no document found with the given ID
+    //       return res.status(404).send("Test blog not found");
+    //     }
+    //     res.send(result);
+    //   } catch (error) {
+    //     console.error("Error:", error);
+    //     res.status(500).send("Internal Server Error");
+    //   }
+    // });
+
+
+
+    app.get("/blogs/:id", async (req, res) => {
+      try {
+        const id = req.params.id;
+
+        // Log the id to see what value is being received
+        console.log("Received ID:", id);
+
+        // Validate if ID is in the correct format for ObjectId
+        if (!ObjectId.isValid(id)) {
+          return res.status(400).send("Invalid ObjectId");
+        }
+
+        const query = {
+          _id: new ObjectId(id),
+        };
+        const result = await userBlogCollection.findOne(query);
+        if (!result) {
+          // If no document found with the given ID
+          return res.status(404).send("Test blog not found");
+        }
+        res.send(result);
+      } catch (error) {
+        console.error("Error:", error);
+        res.status(500).send("Internal Server Error");
+      }
+    });
+
+
+
     app.post("/blogs", async (req, res) => {
       const blog = req.body;
       console.log(req.body);
       const result = await userBlogCollection.insertOne(blog);
       res.send(result);
     });
-    // app.get("/blogs", async (req, res) => {
-    //   const data = userBlogCollection.find();
-    //   const result = await data.toArray();
-    //   res.send(result);
-    // });
-    //   app.get("/blogs", async (req, res) => {
-    //     const { category, searchText } = req.query;
-    //     const query = {};
 
-    //     if (category) {
-    //       query.category = category;
-    //     }
+    app.get("/blogs", async (req, res) => {
+      const { category, searchText } = req.query;
+      const query = {};
 
-    //     if (searchText) {
-    //       query.$text = { $search: searchText };
-    //     }
+      if (category) {
+        query.category = category;
+      }
 
-    //     try {
-    //       let result;
-    //       if (Object.keys(query).length === 0) {
-    //         // No search query provided, return all blogs
-    //         result = await userBlogCollection.find().toArray();
-    //       } else {
-    //         // Search query provided, execute search
-    //         result = await userBlogCollection.find(query).toArray();
-    //       }
-    //       res.send(result);
-    //     } catch (error) {
-    //       console.error("Error:", error);
-    //       res.status(500).send("Internal Server Error");
-    //     }
-    //   });
-      app.get("/blogs", async (req, res) => {
-        const { category, searchText } = req.query;
-        const query = {};
+      if (searchText) {
+        query.$text = { $search: searchText };
+      }
 
-        if (category) {
-          query.category = category;
-        }
-
+      try {
+        let result;
         if (searchText) {
-          query.$text = { $search: searchText };
+          // If searchText is provided, sort the results based on relevance
+          result = await userBlogCollection
+            .find(query, { score: { $meta: "textScore" } })
+            .sort({ score: { $meta: "textScore" } })
+            .toArray();
+        } else {
+          // If no searchText, return all blogs
+          result = await userBlogCollection.find(query).toArray();
         }
-
-        try {
-          let result;
-          if (searchText) {
-            // If searchText is provided, sort the results based on relevance
-            result = await userBlogCollection
-              .find(query, { score: { $meta: "textScore" } })
-              .sort({ score: { $meta: "textScore" } })
-              .toArray();
-          } else {
-            // If no searchText, return all blogs
-            result = await userBlogCollection.find(query).toArray();
-          }
-          res.send(result);
-        } catch (error) {
-          console.error("Error:", error);
-          res.status(500).send("Internal Server Error");
-        }
-      });
-
+        res.send(result);
+      } catch (error) {
+        console.error("Error:", error);
+        res.status(500).send("Internal Server Error");
+      }
+    });
+    // category based
+    app.get("/blogs/:category", async (req, res) => {
+      const category = req.params.category;
+      console.log(req.params.category);
+      const query = { category: category };
+      // Query MongoDB for blogs with the specified category
+      const blogs = await userBlogCollection.find(query).toArray();
+      res.send(blogs);
+    });
 
     app.post("/wishlist", async (req, res) => {
       const data = req.body;
@@ -136,41 +164,62 @@ async function run() {
         .toArray();
       res.send(result);
     });
-    //   search 
-      app.get("/blogs", async (req, res) => {
-        const { category, searchText } = req.query;
-        const query = {};
+    //   search
+    app.get("/blogs", async (req, res) => {
+      const { category, searchText } = req.query;
+      const query = {};
 
-        if (category) {
-          query.category = category;
-        }
+      if (category) {
+        query.category = category;
+      }
 
-        if (searchText) {
-          query.$text = { $search: searchText };
-        }
+      if (searchText) {
+        query.$text = { $search: searchText };
+      }
 
-        try {
-          const result = await userBlogCollection.find(query).toArray();
-          res.send(result);
-        } catch (error) {
-          console.error("Error:", error);
-          res.status(500).send("Internal Server Error");
-        }
-      });
-
-
-    app.get("/blogs/:id", async (req, res) => {
-      const id = req.params.id;
-      const query = {
-        _id: new ObjectId(id),
-      };
-      const result = await userBlogCollection.findOne(query);
-      res.send(result);
+      try {
+        const result = await userBlogCollection.find(query).toArray();
+        res.send(result);
+      } catch (error) {
+        console.error("Error:", error);
+        res.status(500).send("Internal Server Error");
+      }
     });
-    app.get("/users", async (req, res) => {
-      const data = await usersDBCollection.find().toArray();
-      res.send(data);
+
+    // top posts
+    app.get("/posts", async (req, res) => {
+      try {
+        // Fetch top 10 posts based on word count of long description
+        const topPosts = await userBlogCollection.find().toArray();
+
+        // Sort the posts based on the word count of the long description
+        topPosts.sort((a, b) => {
+          // Calculate word count for a and b
+          const wordCountA = a.details.split(" ").length;
+          const wordCountB = b.details.split(" ").length;
+          // Sort in descending order
+          return wordCountB - wordCountA;
+        });
+
+        // Get the top 10 posts
+        const top10Posts = topPosts.slice(0, 10);
+
+        // Format the response data to include Serial Number
+        const formattedPosts = top10Posts.map((post, index) => ({
+          serialNumber: index + 1,
+          title: post.title,
+          owner: post.user, // Assuming "user" contains the owner's name
+          ownerProfilePicture: post.user.profilePicture, // Assuming "profilePicture" is the field for the owner's profile picture
+        }));
+
+        // Send the formatted posts as response
+        res.send(formattedPosts);
+      } catch (error) {
+        console.error("Error:", error);
+        res.status(500).send("Internal Server Error");
+      }
     });
+
     app.get("/blogs", async (req, res) => {
       const { category, searchText } = req.query;
       const query = {};
@@ -233,7 +282,7 @@ async function run() {
       );
       res.send(result);
     });
-    const { ObjectId } = require("mongodb");
+
 
     // Function to validate ObjectId format
     function isValidObjectId(id) {
@@ -263,17 +312,14 @@ async function run() {
     );
   } finally {
     // Ensures that the client will close when you finish/error
-    
   }
 }
 run().catch(console.dir);
 
-
-app.get('/', (req, res) => {
-    res.send('Blog posting server is running')
-
-})
+app.get("/", (req, res) => {
+  res.send("Blog posting server is running");
+});
 
 app.listen(port, () => {
-    console.log('Server is running on port:',port)
-})
+  console.log("Server is running on port:", port);
+});
