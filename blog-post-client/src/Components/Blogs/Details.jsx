@@ -12,12 +12,16 @@ import { useEffect } from "react";
 import Comment from "./Comment";
 
 const Details = () => {
- const { user } = useContext(AuthContext);
-    const loadedBlogdata = useLoaderData();
+  
+  const { user } = useContext(AuthContext);
+  const loadedBlogdata = useLoaderData()
+
     const [comment, setComment] = useState("");
     const [receivedComments, setReceivedComments] = useState([]);
     const { _id: blogId } = loadedBlogdata
-    console.log(loadedBlogdata)
+  const { user: blogUser } = loadedBlogdata;
+  console.log("Loaded Blog Data:", loadedBlogdata);
+  console.log("Blog User:", blogUser);
     
  useEffect(() => {
    // Fetch comments for the current blog
@@ -50,7 +54,7 @@ const Details = () => {
        userEmail,
      commentDate
    };
-   if (user.email === loadedBlogdata.user.email) {
+   if (user.email === blogUser.email) {
      toast.error("Action is not permitted!");
      return;
    }
@@ -78,7 +82,7 @@ const Details = () => {
       <div className=" flex items-center justify-between  mb-10 border-b-2 border-dashed border-blue-400 pb-4">
         <div className=" flex items-center text-2xl gap-2">
           <LuUserCheck2></LuUserCheck2>
-          <p>{loadedBlogdata.user.email}</p>
+          <p>{blogUser.email}</p>
         </div>
         <div className=" flex bg-blue-100 text-blue-400 rounded-3xl p-1 text-center justify-center w-[150px] items-center gap-2">
           <LuClock3></LuClock3>
@@ -120,7 +124,7 @@ const Details = () => {
         </div>
 
         <div className="flex items-center justify-between mt-4">
-          {user.email === loadedBlogdata.user.email ? (
+          {user.email === blogUser.email ? (
             <Link to={`/update/${_id}`}>
               <button className="flex items-center gap-2 bg-colorNavy text-white p-2 text-center justify-center rounded-xl w-[120px]">
                 {" "}
@@ -144,7 +148,7 @@ const Details = () => {
               tabindex="0"
               role="link"
             >
-              {loadedBlogdata.user.email}
+              {blogUser.email}
             </a>
           </div>
         </div>
@@ -200,6 +204,8 @@ const Details = () => {
           ))}
         </div>
       </div>
+
+       
     </div>
   );
 };

@@ -1,13 +1,27 @@
-import React, { useState } from "react";
-import { useLoaderData } from "react-router-dom";
+
+import React, { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 import TotalBlog from "./TotalBlog";
 
 const All = () => {
-  const loadedData = useLoaderData();
-
-  // Initialize search state
+  const [loadedData, setLoadedData] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+
+  useEffect(() => {
+    // Fetch all blogs when component mounts
+    fetchAllBlogs();
+  }, []);
+
+  const fetchAllBlogs = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/blogs");
+      const data = await response.json();
+      setLoadedData(data);
+    } catch (error) {
+      console.error("Error fetching blogs:", error);
+    }
+  };
 
   const handleSearch = async () => {
     try {
@@ -15,49 +29,54 @@ const All = () => {
         `http://localhost:3000/blogs?searchText=${searchText}`
       );
       const data = await response.json();
-      console.log("Search Result:", data);
-      setSearchResults(data); // Update state with search results
+      setSearchResults(data);
+      setSearchText(""); // Clear search text
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
+
+  const handleCategoryChange = async (category) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/blogs/${category}`
+      );
+      const data = await response.json();
+        setSearchResults(data);
+        if (data.length === 0) {
+            toast.error('No data found! displaying all!')
+            
+        }
+    } catch (error) {
+      console.error("Error fetching blogs by category:", error);
+    }
+  };
+
   return (
-    <div className="pt-20 ">
-      <div className="flex pl-4 pr-5 -mt-3  bg-white items-center fixed z-50 w-full container mx-auto  justify-between border-b-2  border-gray-200 pb-5">
+    <div className="pt-20">
+      <div className="flex pl-4 pr-5 -mt-3 bg-white items-center fixed z-50 w-full container mx-auto justify-between border-b-2 border-gray-200 pb-5">
         <div className="flex items-center w-full justify-between">
           <div className="pt-5">
             <p className="mb-2 text-colorNavy text-lg font-semibold">
-              Search items by Blog title{" "}
+              Search items by Blog title
             </p>
             <div>
-              <label className="input input-bordered max-w-[700px] flex items-center gap-2">
+              <label className="input input-bordered w-[300px] lg:w-[500px] rounded-full flex items-center gap-2">
                 <input
                   type="text"
                   value={searchText}
                   onChange={(e) => setSearchText(e.target.value)}
                   className="grow"
-                  placeholder="Search"
+                  placeholder="Search by blog title"
                 />
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 16 16"
-                  fill="currentColor"
-                  className="w-4 h-4 opacity-70"
+                <button
+                  onClick={handleSearch}
+                  className="btn bg-blue-600 hover:bg-blue-700 -mr-5 rounded-full text-white w-[120px] text-center"
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+                  Search
+                </button>
               </label>
-              <button
-                className="btn btn-primary text-white"
-                onClick={handleSearch}
-              >
-                Search
-              </button>
             </div>
           </div>
           {/* Filter by category dropdown */}
@@ -111,7 +130,9 @@ const All = () => {
         <h1 className="text-2xl taxt text-colorNavy pb-5 lg:text-4xl font-bold">
           Number of posted Blogs -{" "}
           <span className="text-green-600 bg-green-100 p-2 rounded-xl">
-            {loadedData.length}
+            {searchResults.length > 0
+              ? searchResults.length
+              : loadedData.length}
           </span>{" "}
         </h1>
       </div>

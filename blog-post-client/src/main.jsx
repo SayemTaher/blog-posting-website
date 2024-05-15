@@ -51,7 +51,7 @@ const router = createBrowserRouter([
         path: "/all/:id",
         element: <All></All>,
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/blogs${params.id}`),
+          fetch(`http://localhost:3000/blogs/${params.id}`),
       },
       {
         path: "/all",
@@ -61,6 +61,7 @@ const router = createBrowserRouter([
       {
         path: "/featured",
         element: <Featured></Featured>,
+        loader: () => fetch("http://localhost:3000/posts"),
       },
       {
         path: "/wish",
